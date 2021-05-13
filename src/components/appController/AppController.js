@@ -7,7 +7,8 @@ import Task from '../task/Task';
 import styles from './AppController.module.css';
 
 export default function AppController() {
-	const [taskList, setTaskList] = useState([]);
+	const [currentTaskList, setCurrentTaskList] = useState([]);
+	const [completedList, setCompletedList] = useState([]);
 
 	const addTask = (content) => {
 		const newTask = {
@@ -15,41 +16,58 @@ export default function AppController() {
 			createdAt: new Date(),
 			isCompleted: false,
 		};
-		setTaskList([...taskList, newTask]);
+		setCurrentTaskList([...currentTaskList, newTask]);
 	};
 
-	const removeTask = (task) => {
-		setTaskList(taskList.filter((result) => result !== task));
+	const removeTaskFromCurrent = (task) => {
+		setCurrentTaskList(currentTaskList.filter((result) => result !== task));
 	};
 
-	const updateTask = (index) => {
-		const newTasks = [...taskList];
-		newTasks[index].isCompleted = true;
-		setTaskList(newTasks);
+	const updateTaskCompleted = (task) => {
+		const newTask = {
+			...task,
+			isCompleted: true,
+			completedAt: new Date(),
+		};
+		setCompletedList([...completedList, newTask]);
+		removeTaskFromCurrent(task);
 	};
 
-	let tasks = null;
+	let currentTasks = null;
 
-	if (taskList) {
-		tasks =
-			taskList &&
-			taskList.map((task, index) => {
+	if (currentTaskList) {
+		currentTasks =
+			currentTaskList &&
+			currentTaskList.map((task, index) => {
 				return (
 					<Task
 						key={index}
-						index={index}
 						task={task}
-						updateTask={updateTask}
-						removeTask={removeTask}
+						updateTask={updateTaskCompleted}
+						removeTask={removeTaskFromCurrent}
 					/>
 				);
+			});
+	}
+
+	let completedTasks = null;
+
+	if (completedList) {
+		completedTasks =
+			completedList &&
+			completedList.map((task, index) => {
+				// Remove buttons from task if completed
+				return <Task key={index} task={task} />;
 			});
 	}
 
 	return (
 		<Container>
 			<FormContainer addTask={addTask} />
-			{tasks}
+			<h1>Current Tasks</h1>
+			{currentTasks}
+			<h1>Completed Tasks</h1>
+			{completedTasks}
 		</Container>
 	);
 }

@@ -5,12 +5,8 @@ import styles from './Task.module.css';
 
 export default function Task(props) {
 	return (
-		<div>
-			<span
-				style={{ textDecoration: props.task.isCompleted ? 'line-through' : '' }}
-			>
-				{props.task.content}
-			</span>
+		<div className={styles.task}>
+			<span>{props.task.content}</span>
 			<Button
 				buttonType={'defaultButton'}
 				onClick={() => props.removeTask(props.task)}
@@ -19,7 +15,7 @@ export default function Task(props) {
 			</Button>
 			<Button
 				buttonType={'defaultButton'}
-				onClick={() => props.updateTask(props.index)}
+				onClick={() => props.updateTask(props.task)}
 			>
 				<CheckCircle />
 			</Button>
