@@ -1,7 +1,11 @@
-import './App.css';
+import React from 'react';
+import AppController from './components/appController/AppController';
+import styles from './App.module.css';
 
-function App() {
-	return <h1>Hello World</h1>;
+export default function App() {
+	return (
+		<main>
+			<AppController />
+		</main>
+	);
 }
-
-export default App;

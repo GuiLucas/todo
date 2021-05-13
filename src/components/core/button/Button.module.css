@@ -1,0 +1,47 @@
+.defaultButton {
+	padding: 1em 1.8125em;
+	border-radius: 4px;
+	font-weight: 700;
+	font-size: 1em;
+	text-align: center;
+	cursor: pointer;
+	box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.15);
+	background-color: var(--button-green);
+	color: #ffffff;
+	border: 1px solid transparent;
+	margin-left: 1rem;
+	float: right;
+	height: fit-content;
+	font-family: inherit;
+}
+
+.remove {
+	composes: defaultButton;
+	color: var(--shopify-green);
+	background-color: var(--text-white);
+}
+
+.remove:hover {
+	background-color: hsl(213, 5%, 85%);
+}
+
+.nominate {
+	composes: defaultButton;
+	color: var(--text-white);
+	background-color: var(--button-green);
+}
+
+.nominate:disabled {
+	background-color: gray;
+	cursor: default;
+}
+
+.nominate:hover:enabled {
+	background-color: var(--shopify-green);
+}
+
+@media only screen and (max-width: 480px) {
+	.defaultButton {
+		font-size: 0.9em;
+	}
+}
