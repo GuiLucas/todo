@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Form from '../core/form/Form';
-import styles from './FormContainer.module.css';
 
 export default function FormContainer(props) {
 	const [inputValue, setInputValue] = useState('');
