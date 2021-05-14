@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap');
+
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	--text-white: hsl(210, 17%, 98%);
+	--pink-accent: hsl(294, 99%, 47%);
+	--blue-accent: hsl(213, 93%, 55%);
+	--dark-blue-detail: hsl(224, 78%, 30%);
+	--light-blue-detail: hsl(223, 68%, 70%);
+	--dark-blue-bg: hsl(227, 100%, 16%);
+	--light-blue-bg: hsl(224, 54%, 41%);
+}
+
+body {
+	background-color: var(--light-blue-bg);
+	font-family: 'Fira Sans', sans-serif;
+	font-size: 16px;
+}
