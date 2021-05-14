@@ -20,7 +20,11 @@ export default function AppController() {
 	};
 
 	const removeTaskFromCurrent = (task) => {
-		setCurrentTaskList(currentTaskList.filter((result) => result !== task));
+		if (!task.isCompleted) {
+			setCurrentTaskList(currentTaskList.filter((result) => result !== task));
+		} else {
+			setCompletedList(completedList.filter((result) => result !== task));
+		}
 	};
 
 	const updateTaskCompleted = (task) => {
@@ -56,17 +60,25 @@ export default function AppController() {
 		completedTasks =
 			completedList &&
 			completedList.map((task, index) => {
-				// Remove buttons from task if completed
-				return <Task key={index} task={task} />;
+				// Remove complete button from task
+				return (
+					<Task key={index} task={task} removeTask={removeTaskFromCurrent} />
+				);
 			});
 	}
 
 	return (
 		<Container>
 			<FormContainer addTask={addTask} />
-			<h1>Current Tasks</h1>
+
+			{currentTasks.length === 0 && completedTasks.length === 0 ? (
+				<h2 className={styles.secondaryHeading}>No tasks, yet</h2>
+			) : null}
 			{currentTasks}
-			<h1>Completed Tasks</h1>
+
+			{completedTasks.length > 0 ? (
+				<h2 className={styles.secondaryHeading}>Completed Tasks</h2>
+			) : null}
 			{completedTasks}
 		</Container>
 	);
