@@ -5,7 +5,7 @@ import styles from './Form.module.css';
 
 export default function Form(props) {
 	return (
-		<form onSubmit={props.handleSubmit}>
+		<form style={{ marginBottom: '2rem' }} onSubmit={props.handleSubmit}>
 			<Input
 				type={props.inputType}
 				placeholder={props.inputPlaceholder}
