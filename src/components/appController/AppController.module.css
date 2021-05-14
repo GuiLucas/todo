@@ -1,0 +1,13 @@
+.secondaryHeading {
+	font-size: 1.5em;
+	font-weight: 400;
+	color: var(--light-blue-detail);
+	margin: 2rem 0;
+	text-transform: uppercase;
+}
+
+/* .warningHeading {
+	composes: secondaryHeading;
+	margin: 0;
+	margin-bottom: 2rem;
+} */

@@ -1,7 +1,17 @@
-import './App.css';
+import React from 'react';
+import AppController from './components/appController/AppController';
+import styles from './App.module.css';
 
-function App() {
-	return <h1>Hello World</h1>;
+export default function App() {
+	return (
+		<>
+			<header>
+				<h1 className={styles.mainHeading}>TSKS</h1>
+				<p className={styles.mainP}>Organize your day better!</p>
+			</header>
+			<main className={styles.main}>
+				<AppController />
+			</main>
+		</>
+	);
 }
-
-export default App;

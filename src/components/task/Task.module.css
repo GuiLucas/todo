@@ -1,0 +1,32 @@
+.task {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	text-align: left;
+	padding: 1rem 2rem;
+	border-radius: 1.25rem;
+	background: var(--dark-blue-bg);
+	color: var(--text-white);
+	font-weight: 400;
+	margin: 0.25rem 0;
+}
+
+.removeButton {
+	color: var(--blue-accent);
+}
+
+.completeButton {
+	color: var(--pink-accent);
+}
+
+.buttonGroup {
+	display: flex;
+	justify-content: space-around;
+}
+/* 
+@media only screen and (max-width: 480px) {
+	.task {
+		max-width: 20rem;
+	}
+} */

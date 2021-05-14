@@ -1,0 +1,21 @@
+.textInput {
+	width: 30rem;
+	padding: 1.5rem 2.5rem;
+	border-style: none;
+	border-radius: 5rem;
+	font-family: inherit;
+	font-size: 1rem;
+	transition: all 300ms ease-in-out;
+	outline: none;
+	/* Change this color*/
+	color: gray;
+	text-align: center;
+}
+
+.textInput:focus {
+	box-shadow: 0 0 0 3px var(--blue-accent);
+}
+
+/* .textInput::placeholder {
+	 text-align: center; 
+} */
