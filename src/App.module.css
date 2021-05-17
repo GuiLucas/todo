@@ -20,6 +20,7 @@
 .mainP {
 	color: var(--light-blue-detail);
 	font-size: 1em;
+	text-transform: uppercase;
 }
 
 .mainHeading {
