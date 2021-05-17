@@ -4,7 +4,7 @@ import styles from './Button.module.css';
 const Button = (props) => {
 	return (
 		<button
-			className={styles.defaultButton}
+			className={styles[props.buttonType]}
 			onClick={props.onClick}
 			disabled={props.disabled}
 		>
