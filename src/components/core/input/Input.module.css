@@ -16,6 +16,16 @@
 	box-shadow: 0 0 0 3px var(--blue-accent);
 }
 
-/* .textInput::placeholder {
-	 text-align: center; 
-} */
+@media only screen and (min-width: 600px) {
+	.textInput {
+		min-width: 25rem;
+		padding-right: 3.5rem;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.textInput {
+		min-width: 30rem;
+		padding-right: 3.5rem;
+	}
+}

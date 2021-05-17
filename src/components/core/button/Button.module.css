@@ -15,10 +15,5 @@
 .submitButton {
 	composes: defaultButton;
 	margin-left: -3rem;
+	padding-right: 0;
 }
-
-/* @media only screen and (max-width: 480px) {
-	.defaultButton {
-		font-size: 0.9em;
-	}
-} */
