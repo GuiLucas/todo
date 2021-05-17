@@ -76,7 +76,12 @@ export default function AppController() {
 
 			{completedTasks.length > 0 ? (
 				<>
-					<h2 className={styles.secondaryHeading}>Completed Tasks</h2>
+					<h2
+						style={{ paddingTop: currentTasks.length === 0 ? '2rem' : '' }}
+						className={styles.secondaryHeading}
+					>
+						Completed Tasks
+					</h2>
 					<div className={styles.tasksContainer}>{completedTasks}</div>
 				</>
 			) : null}
