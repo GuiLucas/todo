@@ -60,7 +60,6 @@ export default function AppController() {
 		completedTasks =
 			completedList &&
 			completedList.map((task, index) => {
-				// Remove complete button from task
 				return (
 					<Task key={index} task={task} removeTask={removeTaskFromCurrent} />
 				);
@@ -71,15 +70,16 @@ export default function AppController() {
 		<Container>
 			<FormContainer addTask={addTask} />
 
-			{currentTasks.length === 0 && completedTasks.length === 0 ? (
-				<h2 className={styles.secondaryHeading}>No tasks, yet</h2>
+			{currentTasks.length > 0 ? (
+				<div className={styles.tasksContainer}>{currentTasks}</div>
 			) : null}
-			{currentTasks}
 
 			{completedTasks.length > 0 ? (
-				<h2 className={styles.secondaryHeading}>Completed Tasks</h2>
+				<>
+					<h2 className={styles.secondaryHeading}>Completed Tasks</h2>
+					<div className={styles.tasksContainer}>{completedTasks}</div>
+				</>
 			) : null}
-			{completedTasks}
 		</Container>
 	);
 }
