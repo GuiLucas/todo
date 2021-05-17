@@ -19,7 +19,7 @@
 
 .mainP {
 	color: var(--light-blue-detail);
-	font-size: 0.9em;
+	font-size: 1em;
 }
 
 .mainHeading {
@@ -32,7 +32,7 @@
 	margin-top: auto;
 	text-align: center;
 	padding-bottom: 3rem;
-	font-size: 0.75em;
+	font-size: 1em;
 	color: var(--light-blue-detail);
 }
 
