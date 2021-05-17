@@ -7,6 +7,7 @@ export default function Task(props) {
 	return (
 		<div className={styles.task}>
 			<p
+				className={styles.taskContent}
 				style={{
 					textDecoration: props.task.isCompleted ? 'line-through' : '',
 				}}
@@ -20,12 +21,14 @@ export default function Task(props) {
 				>
 					<XCircle className={styles.removeButton} />
 				</Button>
-				<Button
-					buttonType={'defaultButton'}
-					onClick={() => props.updateTask(props.task)}
-				>
-					<CheckCircle className={styles.completeButton} />
-				</Button>
+				{!props.task.isCompleted && (
+					<Button
+						buttonType={'defaultButton'}
+						onClick={() => props.updateTask(props.task)}
+					>
+						<CheckCircle className={styles.completeButton} />
+					</Button>
+				)}
 			</div>
 		</div>
 	);
