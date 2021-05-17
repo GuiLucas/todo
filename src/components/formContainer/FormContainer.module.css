@@ -1,0 +1,8 @@
+.form {
+	display: flex;
+	justify-items: center;
+}
+
+.submitButton {
+	color: var(--pink-accent);
+}
