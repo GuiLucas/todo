@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import Form from '../core/form/Form';
+import { PlusCircle } from 'react-feather';
+import Input from '../core/input/Input';
+import Button from '../core/button/Button';
+import styles from './FormContainer.module.css';
 
 export default function FormContainer(props) {
 	const [inputValue, setInputValue] = useState('');
@@ -18,12 +21,20 @@ export default function FormContainer(props) {
 	};
 
 	return (
-		<Form
-			handleSubmit={handleSubmit}
-			inputType={'text'}
-			inputPlaceholder={'Add a new Task'}
-			handleChange={handleChange}
-			inputValue={inputValue}
-		/>
+		<form className={styles.form} onSubmit={handleSubmit}>
+			<Input
+				type={'text'}
+				placeholder={'Add a new task'}
+				value={inputValue}
+				onChange={(e) => handleChange(e.target.value)}
+			/>
+			<Button
+				disabled={!inputValue}
+				buttonType={'submitButton'}
+				onClick={() => handleSubmit}
+			>
+				<PlusCircle className={inputValue && styles.submitButton} />
+			</Button>
+		</form>
 	);
 }
