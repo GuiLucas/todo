@@ -13,9 +13,6 @@ export default function FormContainer(props) {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-
-		if (!inputValue) return;
-
 		props.addTask(inputValue);
 		setInputValue('');
 	};
@@ -31,7 +28,7 @@ export default function FormContainer(props) {
 			<Button
 				disabled={!inputValue}
 				buttonType={'submitButton'}
-				onClick={() => handleSubmit}
+				onClick={handleSubmit}
 			>
 				<PlusCircle className={inputValue && styles.submitButton} />
 			</Button>
