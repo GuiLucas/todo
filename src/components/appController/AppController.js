@@ -7,8 +7,8 @@ import Task from '../task/Task';
 import styles from './AppController.module.css';
 
 export default function AppController() {
-	const [currentTaskList, setCurrentTaskList] = useState([]);
-	const [completedList, setCompletedList] = useState([]);
+	const [currentTasks, setCurrentTasks] = useState([]);
+	const [completedTasks, setCompletedTasks] = useState([]);
 
 	const addTask = (content) => {
 		const newTask = {
@@ -16,14 +16,14 @@ export default function AppController() {
 			createdAt: new Date(),
 			isCompleted: false,
 		};
-		setCurrentTaskList([...currentTaskList, newTask]);
+		setCurrentTasks([...currentTasks, newTask]);
 	};
 
 	const removeTaskFromCurrent = (task) => {
 		if (!task.isCompleted) {
-			setCurrentTaskList(currentTaskList.filter((result) => result !== task));
+			setCurrentTasks(currentTasks.filter((result) => result !== task));
 		} else {
-			setCompletedList(completedList.filter((result) => result !== task));
+			setCompletedTasks(completedTasks.filter((result) => result !== task));
 		}
 	};
 
@@ -33,16 +33,16 @@ export default function AppController() {
 			isCompleted: true,
 			completedAt: new Date(),
 		};
-		setCompletedList([...completedList, newTask]);
+		setCompletedTasks([...completedTasks, newTask]);
 		removeTaskFromCurrent(task);
 	};
 
-	let currentTasks = null;
+	let currentList = null;
 
-	if (currentTaskList) {
-		currentTasks =
-			currentTaskList &&
-			currentTaskList.map((task, index) => {
+	if (currentTasks) {
+		currentList =
+			currentTasks &&
+			currentTasks.map((task, index) => {
 				return (
 					<Task
 						key={index}
@@ -54,12 +54,12 @@ export default function AppController() {
 			});
 	}
 
-	let completedTasks = null;
+	let completedList = null;
 
-	if (completedList) {
-		completedTasks =
-			completedList &&
-			completedList.map((task, index) => {
+	if (completedTasks) {
+		completedList =
+			completedTasks &&
+			completedTasks.map((task, index) => {
 				return (
 					<Task key={index} task={task} removeTask={removeTaskFromCurrent} />
 				);
@@ -70,19 +70,19 @@ export default function AppController() {
 		<Container>
 			<FormContainer addTask={addTask} />
 
-			{currentTasks.length > 0 ? (
-				<div className={styles.tasksContainer}>{currentTasks}</div>
+			{currentList.length > 0 ? (
+				<div className={styles.tasksContainer}>{currentList}</div>
 			) : null}
 
-			{completedTasks.length > 0 ? (
+			{completedList.length > 0 ? (
 				<>
 					<h2
-						style={{ paddingTop: currentTasks.length === 0 ? '2rem' : '' }}
+						style={{ paddingTop: currentList.length === 0 ? '2rem' : '' }}
 						className={styles.secondaryHeading}
 					>
 						Completed Tasks
 					</h2>
-					<div className={styles.tasksContainer}>{completedTasks}</div>
+					<div className={styles.tasksContainer}>{completedList}</div>
 				</>
 			) : null}
 		</Container>
