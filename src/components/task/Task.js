@@ -3,28 +3,30 @@ import Button from '../core/button/Button';
 import { XCircle, CheckCircle } from 'react-feather';
 import styles from './Task.module.css';
 
-export default function Task(props) {
+export default function Task({ isCompleted, content, removeTask, updateTask }) {
 	return (
 		<div className={styles.task}>
 			<p
 				className={styles.taskContent}
 				style={{
-					textDecoration: props.task.isCompleted ? 'line-through' : '',
+					textDecoration: isCompleted ? 'line-through' : '',
 				}}
 			>
-				{props.task.content}
+				{content}
 			</p>
 			<div className={styles.buttonGroup}>
 				<Button
-					buttonType={'defaultButton'}
-					onClick={() => props.removeTask(props.task)}
+					type={'button'}
+					buttonStyle={'defaultButton'}
+					onClick={removeTask}
 				>
 					<XCircle className={styles.removeButton} />
 				</Button>
-				{!props.task.isCompleted && (
+				{!isCompleted && (
 					<Button
-						buttonType={'defaultButton'}
-						onClick={() => props.updateTask(props.task)}
+						type={'button'}
+						buttonStyle={'defaultButton'}
+						onClick={updateTask}
 					>
 						<CheckCircle className={styles.completeButton} />
 					</Button>

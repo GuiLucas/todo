@@ -4,7 +4,7 @@ import Input from '../core/input/Input';
 import Button from '../core/button/Button';
 import styles from './FormContainer.module.css';
 
-export default function FormContainer(props) {
+export default function FormContainer({ addTask }) {
 	const [inputValue, setInputValue] = useState('');
 
 	const handleChange = (value) => {
@@ -13,12 +13,12 @@ export default function FormContainer(props) {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		props.addTask(inputValue);
+		addTask(inputValue);
 		setInputValue('');
 	};
 
 	return (
-		<form className={styles.form} onSubmit={handleSubmit}>
+		<form className={styles.form} onSubmit={(event) => handleSubmit(event)}>
 			<Input
 				type={'text'}
 				placeholder={'Add a new task'}
@@ -26,9 +26,9 @@ export default function FormContainer(props) {
 				onChange={(e) => handleChange(e.target.value)}
 			/>
 			<Button
+				type={'submit'}
 				disabled={!inputValue}
-				buttonType={'submitButton'}
-				onClick={handleSubmit}
+				buttonStyle={'submitButton'}
 			>
 				<PlusCircle className={inputValue && styles.submitButton} />
 			</Button>
