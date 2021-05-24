@@ -33,3 +33,19 @@
 	border-radius: 0.5rem;
 	padding: 0.25rem;
 }
+
+.resetButton {
+	composes: defaultButton;
+	font-size: 1.25em;
+	color: var(--text-white);
+	border: 1px solid var(--text-white);
+	padding: 1rem 1.75rem;
+	border-radius: 0.5rem;
+	transition: all 300ms ease-in-out;
+	margin-top: 1rem;
+}
+
+.resetButton:hover {
+	border-color: var(--pink-accent);
+	box-shadow: 0 0 0 1px var(--pink-accent);
+}

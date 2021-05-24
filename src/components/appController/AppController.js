@@ -17,6 +17,7 @@ import Container from '../core/container/Container';
 import FormContainer from '../formContainer/FormContainer';
 import Task from '../task/Task';
 import Undo from '../core/undo/Undo';
+import Button from '../core/button/Button';
 
 // Styling
 import styles from './AppController.module.css';
@@ -83,11 +84,15 @@ export default function AppController() {
 				</>
 			) : null}
 
-			{/* {state.tasks.length > 0 && (
-				<button type='reset' onClick={() => dispatch(resetState())}>
+			{state.tasks.length > 0 && (
+				<Button
+					type={'reset'}
+					buttonStyle={'resetButton'}
+					onClick={() => dispatch(resetState())}
+				>
 					Clear all tasks
-				</button>
-			)} */}
+				</Button>
+			)}
 
 			<ToastContainer
 				closeOnClick={false}
