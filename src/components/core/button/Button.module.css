@@ -21,3 +21,15 @@
 .submitButton:disabled {
 	cursor: default;
 }
+
+.undoButton {
+	composes: defaultButton;
+	color: var(--text-white);
+	font-size: inherit;
+	font-weight: 700;
+	text-transform: uppercase;
+	font-weight: 400;
+	border: 1px solid var(--text-white);
+	border-radius: 0.5rem;
+	padding: 0.25rem;
+}

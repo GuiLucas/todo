@@ -1,17 +1,22 @@
 import React, { useReducer } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { ToastContainer, toast } from 'react-toastify';
+
+//Components
 import Container from '../core/container/Container';
 import FormContainer from '../formContainer/FormContainer';
 import Task from '../task/Task';
-import { v4 as uuidv4 } from 'uuid';
+import Undo from '../core/undo/Undo';
 
 // Styling
 import styles from './AppController.module.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const initialState = { tasks: [], toRemove: [] };
 
 const taskReducer = (state, action) => {
 	switch (action.type) {
-		case 'ADD_TODO':
+		case 'ADD_TASK':
 			return {
 				id: uuidv4(),
 				content: action.content,
@@ -19,7 +24,7 @@ const taskReducer = (state, action) => {
 				isCompleted: false,
 				completedAt: null,
 			};
-		case 'TOGGLE_TODO':
+		case 'TOGGLE_TASK':
 			if (state.id !== action.id) {
 				return state;
 			}
@@ -36,20 +41,30 @@ const taskReducer = (state, action) => {
 
 const tasksReducer = (state = { tasks: [], toRemove: [] }, action) => {
 	switch (action.type) {
-		case 'ADD_TODO':
+		case 'ADD_TASK':
 			return {
 				...state,
 				tasks: [...state.tasks, taskReducer(undefined, action)],
 			};
-		case 'TOGGLE_TODO':
+		case 'TOGGLE_TASK':
 			return {
 				...state,
 				tasks: state.tasks.map((t) => taskReducer(t, action)),
 			};
-		case 'REMOVE_TODO':
+		case 'QUEUE_FOR_REMOVAL':
 			return {
 				...state,
-				tasks: state.tasks.filter((t) => t.id !== action.id),
+				toRemove: [...state.toRemove, action.id],
+			};
+		case 'CLEAN_TASKS':
+			return {
+				tasks: state.tasks.filter((t) => !state.toRemove.includes(t.id)),
+				toRemove: [],
+			};
+		case 'UNDO':
+			return {
+				...state,
+				toRemove: state.toRemove.filter((t) => t !== action.id),
 			};
 		case 'RESET':
 			return initialState;
@@ -61,16 +76,22 @@ const tasksReducer = (state = { tasks: [], toRemove: [] }, action) => {
 export default function AppController() {
 	const [state, dispatch] = useReducer(tasksReducer, initialState);
 
-	const addTask = (content) => dispatch({ type: 'ADD_TODO', content: content });
+	const addTask = (content) => dispatch({ type: 'ADD_TASK', content });
 
-	const updateTask = (id) => dispatch({ type: 'TOGGLE_TODO', id: id });
+	const updateTask = (id) => dispatch({ type: 'TOGGLE_TASK', id });
 
-	const removeTask = (id) => dispatch({ type: 'REMOVE_TODO', id: id });
+	const removeTask = (id) => {
+		dispatch({ type: 'QUEUE_FOR_REMOVAL', id });
+
+		toast.info(<Undo onUndo={() => dispatch({ type: 'UNDO', id })} />, {
+			onClose: () => dispatch({ type: 'CLEAN_TASKS' }),
+		});
+	};
 
 	// const resetState = () => dispatch({ type: 'RESET' });
 
 	const currentList = state.tasks
-		.filter((task) => !task.isCompleted)
+		.filter((task) => !task.isCompleted && !state.toRemove.includes(task.id))
 		.map((task) => {
 			return (
 				<Task
@@ -83,7 +104,7 @@ export default function AppController() {
 		});
 
 	const completedList = state.tasks
-		.filter((task) => task.isCompleted)
+		.filter((task) => task.isCompleted && !state.toRemove.includes(task.id))
 		.map((task) => {
 			return (
 				<Task
@@ -114,6 +135,13 @@ export default function AppController() {
 					<div className={styles.tasksContainer}>{completedList}</div>
 				</>
 			) : null}
+
+			<ToastContainer
+				closeOnClick={false}
+				closeButton={false}
+				autoClose={5000}
+				draggable={false}
+			/>
 		</Container>
 	);
 }
