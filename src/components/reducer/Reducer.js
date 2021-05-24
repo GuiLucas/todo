@@ -12,6 +12,7 @@ export const init = (initialValue = initialState) => {
 	return initialValue;
 };
 
+// Reducers
 const taskReducer = (state, action) => {
 	switch (action.type) {
 		case 'ADD_TASK':
@@ -65,8 +66,21 @@ export const tasksReducer = (state = { tasks: [], toRemove: [] }, action) => {
 				toRemove: state.toRemove.filter((t) => t !== action.id),
 			};
 		case 'RESET':
-			return init();
+			return initialState;
 		default:
 			return state;
 	}
 };
+
+// Actions
+export const addTask = (content) => ({ type: 'ADD_TASK', content });
+
+export const updateTask = (id) => ({ type: 'TOGGLE_TASK', id });
+
+export const queueForRemoval = (id) => ({ type: 'QUEUE_FOR_REMOVAL', id });
+
+export const undoTask = (id) => ({ type: 'UNDO', id });
+
+export const cleanTasks = (id) => ({ type: 'CLEAN_TASKS' });
+
+export const resetState = () => ({ type: 'RESET' });

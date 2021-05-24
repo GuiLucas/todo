@@ -1,6 +1,16 @@
 import React, { useReducer, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import { tasksReducer, init, initialState } from '../reducer/Reducer';
+import {
+	tasksReducer,
+	init,
+	initialState,
+	addTask,
+	updateTask,
+	queueForRemoval,
+	undoTask,
+	cleanTasks,
+	resetState,
+} from '../reducer/Reducer';
 
 //Components
 import Container from '../core/container/Container';
@@ -19,20 +29,13 @@ export default function AppController() {
 		localStorage.setItem('localTasks', JSON.stringify(state.tasks));
 	}, [state.tasks]);
 
-	// Actions
-	const addTask = (content) => dispatch({ type: 'ADD_TASK', content });
-
-	const updateTask = (id) => dispatch({ type: 'TOGGLE_TASK', id });
-
 	const removeTask = (id) => {
-		dispatch({ type: 'QUEUE_FOR_REMOVAL', id });
+		dispatch(queueForRemoval(id));
 
-		toast.info(<Undo onUndo={() => dispatch({ type: 'UNDO', id })} />, {
-			onClose: () => dispatch({ type: 'CLEAN_TASKS' }),
+		toast.info(<Undo onUndo={() => dispatch(undoTask(id))} />, {
+			onClose: () => dispatch(cleanTasks(id)),
 		});
 	};
-
-	// const resetState = () => dispatch({ type: 'RESET' });
 
 	const currentList = state.tasks
 		.filter((task) => !task.isCompleted && !state.toRemove.includes(task.id))
@@ -41,7 +44,7 @@ export default function AppController() {
 				<Task
 					key={task.id}
 					{...task}
-					updateTask={() => updateTask(task.id)}
+					updateTask={() => dispatch(updateTask(task.id))}
 					removeTask={() => removeTask(task.id)}
 				/>
 			);
@@ -54,7 +57,7 @@ export default function AppController() {
 				<Task
 					key={task.id}
 					{...task}
-					updateTask={() => updateTask(task.id)}
+					updateTask={() => dispatch(updateTask(task.id))}
 					removeTask={() => removeTask(task.id)}
 				/>
 			);
@@ -62,7 +65,7 @@ export default function AppController() {
 
 	return (
 		<Container>
-			<FormContainer addTask={(inputValue) => addTask(inputValue)} />
+			<FormContainer addTask={(content) => dispatch(addTask(content))} />
 
 			{currentList.length > 0 ? (
 				<div className={styles.tasksContainer}>{currentList}</div>
@@ -79,6 +82,12 @@ export default function AppController() {
 					<div className={styles.tasksContainer}>{completedList}</div>
 				</>
 			) : null}
+
+			{/* {state.tasks.length > 0 && (
+				<button type='reset' onClick={() => dispatch(resetState())}>
+					Clear all tasks
+				</button>
+			)} */}
 
 			<ToastContainer
 				closeOnClick={false}
