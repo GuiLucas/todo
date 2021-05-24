@@ -1,90 +1,105 @@
-import React, { useState } from 'react';
+import React, { useReducer, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import {
+	tasksReducer,
+	init,
+	initialState,
+	addTask,
+	updateTask,
+	queueForRemoval,
+	undoTask,
+	cleanTasks,
+	resetState,
+} from '../reducer/Reducer';
+
+//Components
 import Container from '../core/container/Container';
 import FormContainer from '../formContainer/FormContainer';
 import Task from '../task/Task';
+import Undo from '../core/undo/Undo';
+import Button from '../core/button/Button';
 
 // Styling
 import styles from './AppController.module.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AppController() {
-	const [currentTaskList, setCurrentTaskList] = useState([]);
-	const [completedList, setCompletedList] = useState([]);
+	const [state, dispatch] = useReducer(tasksReducer, initialState, init);
 
-	const addTask = (content) => {
-		const newTask = {
-			content: content,
-			createdAt: new Date(),
-			isCompleted: false,
-		};
-		setCurrentTaskList([...currentTaskList, newTask]);
+	useEffect(() => {
+		localStorage.setItem('localTasks', JSON.stringify(state.tasks));
+	}, [state.tasks]);
+
+	const removeTask = (id) => {
+		dispatch(queueForRemoval(id));
+
+		toast.info(<Undo onUndo={() => dispatch(undoTask(id))} />, {
+			onClose: () => dispatch(cleanTasks(id)),
+		});
 	};
 
-	const removeTaskFromCurrent = (task) => {
-		if (!task.isCompleted) {
-			setCurrentTaskList(currentTaskList.filter((result) => result !== task));
-		} else {
-			setCompletedList(completedList.filter((result) => result !== task));
-		}
-	};
+	const currentList = state.tasks
+		.filter((task) => !task.isCompleted && !state.toRemove.includes(task.id))
+		.map((task) => {
+			return (
+				<Task
+					key={task.id}
+					{...task}
+					updateTask={() => dispatch(updateTask(task.id))}
+					removeTask={() => removeTask(task.id)}
+				/>
+			);
+		});
 
-	const updateTaskCompleted = (task) => {
-		const newTask = {
-			...task,
-			isCompleted: true,
-			completedAt: new Date(),
-		};
-		setCompletedList([...completedList, newTask]);
-		removeTaskFromCurrent(task);
-	};
-
-	let currentTasks = null;
-
-	if (currentTaskList) {
-		currentTasks =
-			currentTaskList &&
-			currentTaskList.map((task, index) => {
-				return (
-					<Task
-						key={index}
-						task={task}
-						updateTask={updateTaskCompleted}
-						removeTask={removeTaskFromCurrent}
-					/>
-				);
-			});
-	}
-
-	let completedTasks = null;
-
-	if (completedList) {
-		completedTasks =
-			completedList &&
-			completedList.map((task, index) => {
-				return (
-					<Task key={index} task={task} removeTask={removeTaskFromCurrent} />
-				);
-			});
-	}
+	const completedList = state.tasks
+		.filter((task) => task.isCompleted && !state.toRemove.includes(task.id))
+		.map((task) => {
+			return (
+				<Task
+					key={task.id}
+					{...task}
+					updateTask={() => dispatch(updateTask(task.id))}
+					removeTask={() => removeTask(task.id)}
+				/>
+			);
+		});
 
 	return (
 		<Container>
-			<FormContainer addTask={addTask} />
+			<FormContainer addTask={(content) => dispatch(addTask(content))} />
 
-			{currentTasks.length > 0 ? (
-				<div className={styles.tasksContainer}>{currentTasks}</div>
+			{currentList.length > 0 ? (
+				<div className={styles.tasksContainer}>{currentList}</div>
 			) : null}
 
-			{completedTasks.length > 0 ? (
+			{completedList.length > 0 ? (
 				<>
 					<h2
-						style={{ paddingTop: currentTasks.length === 0 ? '2rem' : '' }}
+						style={{ paddingTop: currentList.length === 0 ? '2rem' : '' }}
 						className={styles.secondaryHeading}
 					>
 						Completed Tasks
 					</h2>
-					<div className={styles.tasksContainer}>{completedTasks}</div>
+					<div className={styles.tasksContainer}>{completedList}</div>
 				</>
 			) : null}
+
+			{state.tasks.length > 0 && (
+				<Button
+					type={'reset'}
+					buttonStyle={'resetButton'}
+					onClick={() => dispatch(resetState())}
+				>
+					Clear all tasks
+				</Button>
+			)}
+
+			<ToastContainer
+				closeOnClick={false}
+				closeButton={false}
+				autoClose={5000}
+				draggable={false}
+			/>
 		</Container>
 	);
 }

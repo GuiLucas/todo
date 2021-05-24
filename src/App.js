@@ -19,7 +19,7 @@ export default function App() {
 						className={styles.footerLink}
 						href='https://github.com/GuiLucas'
 						target='_blank'
-						rel='noreferrer'
+						rel='noopener noreferrer'
 					>
 						Guilherme Lucas
 					</a>
