@@ -1,6 +1,6 @@
-import React, { useReducer } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useReducer, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import { tasksReducer, init, initialState } from '../reducer/Reducer';
 
 //Components
 import Container from '../core/container/Container';
@@ -12,70 +12,14 @@ import Undo from '../core/undo/Undo';
 import styles from './AppController.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-const initialState = { tasks: [], toRemove: [] };
-
-const taskReducer = (state, action) => {
-	switch (action.type) {
-		case 'ADD_TASK':
-			return {
-				id: uuidv4(),
-				content: action.content,
-				createdAt: new Date(),
-				isCompleted: false,
-				completedAt: null,
-			};
-		case 'TOGGLE_TASK':
-			if (state.id !== action.id) {
-				return state;
-			}
-
-			return {
-				...state,
-				isCompleted: !state.isCompleted,
-				completedAt: new Date(),
-			};
-		default:
-			return state;
-	}
-};
-
-const tasksReducer = (state = { tasks: [], toRemove: [] }, action) => {
-	switch (action.type) {
-		case 'ADD_TASK':
-			return {
-				...state,
-				tasks: [...state.tasks, taskReducer(undefined, action)],
-			};
-		case 'TOGGLE_TASK':
-			return {
-				...state,
-				tasks: state.tasks.map((t) => taskReducer(t, action)),
-			};
-		case 'QUEUE_FOR_REMOVAL':
-			return {
-				...state,
-				toRemove: [...state.toRemove, action.id],
-			};
-		case 'CLEAN_TASKS':
-			return {
-				tasks: state.tasks.filter((t) => !state.toRemove.includes(t.id)),
-				toRemove: [],
-			};
-		case 'UNDO':
-			return {
-				...state,
-				toRemove: state.toRemove.filter((t) => t !== action.id),
-			};
-		case 'RESET':
-			return initialState;
-		default:
-			return state;
-	}
-};
-
 export default function AppController() {
-	const [state, dispatch] = useReducer(tasksReducer, initialState);
+	const [state, dispatch] = useReducer(tasksReducer, initialState, init);
 
+	useEffect(() => {
+		localStorage.setItem('localTasks', JSON.stringify(state.tasks));
+	}, [state.tasks]);
+
+	// Actions
 	const addTask = (content) => dispatch({ type: 'ADD_TASK', content });
 
 	const updateTask = (id) => dispatch({ type: 'TOGGLE_TASK', id });
