@@ -10,7 +10,7 @@ export default function Undo({ onUndo, closeToast }) {
 
 	return (
 		<div className={styles.toast}>
-			<h3>
+			<h3 className={styles.heading}>
 				Task Deleted{' '}
 				<Button buttonStyle={'undoButton'} onClick={handleClick}>
 					UNDO

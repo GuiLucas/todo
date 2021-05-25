@@ -84,7 +84,7 @@ export default function AppController() {
 				</>
 			) : null}
 
-			{state.tasks.length > 0 && (
+			{!state.toRemove.length && state.tasks.length > 0 && (
 				<Button
 					type={'reset'}
 					buttonStyle={'resetButton'}
@@ -98,7 +98,7 @@ export default function AppController() {
 				closeOnClick={false}
 				closeButton={false}
 				autoClose={5000}
-				draggable={false}
+				progressClassName={styles.toastProgress}
 			/>
 		</Container>
 	);

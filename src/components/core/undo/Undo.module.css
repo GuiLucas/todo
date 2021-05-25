@@ -1,6 +1,10 @@
 .toast {
 	text-align: center;
 	font-size: 1em;
-	font-weight: 400;
 	color: var(--text-white);
+}
+
+.heading {
+	font-weight: 400;
+	font-size: 1.25em;
 }
