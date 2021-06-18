@@ -1,7 +1,7 @@
 import React from 'react';
-import Button from '../core/button/Button';
+import Button from './Button';
 import { XCircle, CheckCircle } from 'react-feather';
-import styles from './Task.module.css';
+import styles from '../styles/Task.module.css';
 
 export default function Task({ isCompleted, content, removeTask, updateTask }) {
 	return (

@@ -13,14 +13,14 @@ import {
 } from '../reducer/Reducer';
 
 //Components
-import Container from '../core/container/Container';
-import FormContainer from '../formContainer/FormContainer';
-import Task from '../task/Task';
-import Undo from '../core/undo/Undo';
-import Button from '../core/button/Button';
+import Container from './Container';
+import FormContainer from './FormContainer';
+import Task from './Task';
+import Undo from './Undo';
+import Button from './Button';
 
 // Styling
-import styles from './AppController.module.css';
+import styles from '../styles/AppController.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function AppController() {

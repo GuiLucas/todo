@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from '../button/Button';
-import styles from './Undo.module.css';
+import Button from './Button';
+import styles from '../styles/Undo.module.css';
 
 export default function Undo({ onUndo, closeToast }) {
 	const handleClick = () => {
