@@ -13,14 +13,13 @@ import {
 } from '../reducer/Reducer';
 
 //Components
-import Container from '../core/container/Container';
-import FormContainer from '../formContainer/FormContainer';
-import Task from '../task/Task';
-import Undo from '../core/undo/Undo';
-import Button from '../core/button/Button';
+import AddTask from './AddTask';
+import Task from './Task';
+import Undo from './Undo';
+import Button from './Button';
 
 // Styling
-import styles from './AppController.module.css';
+import styles from '../styles/TaskList.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function AppController() {
@@ -65,8 +64,8 @@ export default function AppController() {
 		});
 
 	return (
-		<Container>
-			<FormContainer addTask={(content) => dispatch(addTask(content))} />
+		<div className={styles.container}>
+			<AddTask addTask={(content) => dispatch(addTask(content))} />
 
 			{currentList.length > 0 ? (
 				<div className={styles.tasksContainer}>{currentList}</div>
@@ -84,7 +83,7 @@ export default function AppController() {
 				</>
 			) : null}
 
-			{state.tasks.length > 0 && (
+			{!state.toRemove.length && state.tasks.length > 0 && (
 				<Button
 					type={'reset'}
 					buttonStyle={'resetButton'}
@@ -98,8 +97,8 @@ export default function AppController() {
 				closeOnClick={false}
 				closeButton={false}
 				autoClose={5000}
-				draggable={false}
+				progressClassName={styles.toastProgress}
 			/>
-		</Container>
+		</div>
 	);
 }

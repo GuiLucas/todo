@@ -1,0 +1,43 @@
+.secondaryHeading {
+	font-size: 1.5em;
+	font-weight: 400;
+	color: var(--light-blue-detail);
+	text-transform: uppercase;
+}
+
+.tasksContainer {
+	width: 100%;
+	margin: 2rem 0;
+}
+
+@media only screen and (min-width: 1200px) {
+	.secondaryHeading {
+		font-size: 2em;
+	}
+}
+
+.toastProgress {
+	background: var(--pink-accent) !important;
+}
+
+.container {
+	display: grid;
+	place-items: center;
+	width: 100%;
+	max-width: 30rem;
+	padding: 0 1rem;
+}
+
+@media only screen and (min-width: 600px) {
+	.container {
+		max-width: 35rem;
+		padding: 0;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.container {
+		max-width: 50rem;
+		padding: 0;
+	}
+}
