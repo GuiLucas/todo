@@ -13,14 +13,13 @@ import {
 } from '../reducer/Reducer';
 
 //Components
-import Container from './Container';
 import FormContainer from './FormContainer';
 import Task from './Task';
 import Undo from './Undo';
 import Button from './Button';
 
 // Styling
-import styles from '../styles/AppController.module.css';
+import styles from '../styles/TaskList.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function AppController() {
@@ -65,7 +64,7 @@ export default function AppController() {
 		});
 
 	return (
-		<Container>
+		<div className={styles.container}>
 			<FormContainer addTask={(content) => dispatch(addTask(content))} />
 
 			{currentList.length > 0 ? (
@@ -100,6 +99,6 @@ export default function AppController() {
 				autoClose={5000}
 				progressClassName={styles.toastProgress}
 			/>
-		</Container>
+		</div>
 	);
 }

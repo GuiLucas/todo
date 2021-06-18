@@ -1,5 +1,5 @@
 import React from 'react';
-import AppController from './components/AppController';
+import TaskList from './components/TaskList';
 import styles from './styles/App.module.css';
 
 export default function App() {
@@ -10,7 +10,7 @@ export default function App() {
 				<p className={styles.mainP}>Organize your day better!</p>
 			</header>
 			<main className={styles.main}>
-				<AppController />
+				<TaskList />
 			</main>
 			<footer className={styles.footer}>
 				<p>
