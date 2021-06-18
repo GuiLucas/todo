@@ -13,7 +13,7 @@ import {
 } from '../reducer/Reducer';
 
 //Components
-import FormContainer from './FormContainer';
+import AddTask from './AddTask';
 import Task from './Task';
 import Undo from './Undo';
 import Button from './Button';
@@ -65,7 +65,7 @@ export default function AppController() {
 
 	return (
 		<div className={styles.container}>
-			<FormContainer addTask={(content) => dispatch(addTask(content))} />
+			<AddTask addTask={(content) => dispatch(addTask(content))} />
 
 			{currentList.length > 0 ? (
 				<div className={styles.tasksContainer}>{currentList}</div>

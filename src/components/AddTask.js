@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PlusCircle } from 'react-feather';
 import Input from './Input';
 import Button from './Button';
-import styles from '../styles/FormContainer.module.css';
+import styles from '../styles/AddTask.module.css';
 
 export default function FormContainer({ addTask }) {
 	const [inputValue, setInputValue] = useState('');
